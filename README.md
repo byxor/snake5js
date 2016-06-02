@@ -1,2 +1,2 @@
 # snake5js
-A snake clone written with p5.js with time constraints
+A snake game written in 35 minutes using a framework (p5.js) I'd never used before. Enjoy.
