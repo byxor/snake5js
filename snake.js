@@ -12,7 +12,17 @@ function Snake()
 	this.bodyparts = [];
 	var firstpiece = new BodyPart(this.x, this.y)
 	this.bodyparts.push(firstpiece);	
+	
+	this.rotationQueue = [];
 }
+
+Snake.prototype.update = function()
+{
+	this.consumeRotation();
+	this.move();
+	this.checkCollision();
+	this.attemptEat();
+};
 
 Snake.prototype.move = function()
 {
@@ -42,13 +52,24 @@ Snake.prototype.grow = function()
 	this.power += 1;
 };
 
-Snake.prototype.rotate = function()
+Snake.prototype.consumeRotation = function()
+{
+	var len = this.rotationQueue.length;
+	if (len <= 0)
+		return;
+		
+	var kc = this.rotationQueue[0];
+	this.rotate(kc);
+	this.rotationQueue.splice(0, 1);
+};
+
+Snake.prototype.rotate = function(kc)
 {
 	if(this.ready == false)
 		return;
 		
 	this.ready = false;
-	if (keyCode == DOWN_ARROW)
+	if (kc == DOWN_ARROW)
 	{
 		if (this.ySpeed == -1)
 			return;
@@ -56,7 +77,7 @@ Snake.prototype.rotate = function()
 		this.ySpeed = 1;
 		return;
 	}
-	if (keyCode == LEFT_ARROW)
+	if (kc == LEFT_ARROW)
 	{
 		if (this.xSpeed == 1)
 			return;
@@ -64,7 +85,7 @@ Snake.prototype.rotate = function()
 		this.ySpeed = 0;
 		return;
 	}
-	if (keyCode == RIGHT_ARROW)
+	if (kc == RIGHT_ARROW)
 	{
 		if (this.xSpeed == -1)
 			return;
@@ -72,7 +93,7 @@ Snake.prototype.rotate = function()
 		this.ySpeed = 0;
 		return;
 	}
-	if (keyCode == UP_ARROW)
+	if (kc == UP_ARROW)
 	{
 		if (this.ySpeed == 1)
 			return;

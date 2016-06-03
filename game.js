@@ -33,11 +33,7 @@ function setup()
 function draw()
 {
 	background(0, 0, 0);
-	
-	snake.move();
-	snake.checkCollision();
-	snake.attemptEat(food);
-	
+	snake.update();
 	snake.draw();
 	food.draw();
 }
@@ -49,5 +45,5 @@ function mouseClicked()
 
 function keyPressed()
 {
-	snake.rotate();
+	snake.rotationQueue.push(keyCode);
 }
